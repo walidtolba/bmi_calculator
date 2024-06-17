@@ -1,8 +1,12 @@
+import 'package:bmi_calculator/calculator.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/gender_select_button.dart';
+import 'package:bmi_calculator/components/my_custom_button.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:bmi_calculator/constants.dart';
-import 'package:bmi_calculator/reusable_card.dart';
+import 'package:bmi_calculator/screens/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bmi_calculator/gender_select_button.dart';
 
 enum GenderType {
   male,
@@ -194,12 +198,15 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 10.0),
-            color: kBottomContainerColor,
-            width: double.infinity,
-            height: kBottomContainerHeight,
-          )
+          BottomButton(title: 'Calculate', onPressed: (){
+            Calculator calc = Calculator(height: height, weight: weight);
+
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage(
+              bmi: calc.calculateBMI(),
+              result: calc.getResult(),
+              interpretation: calc.getInterpretation(),
+            )));
+          },)
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -210,23 +217,3 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-class MyCustomButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final Widget child;
-  MyCustomButton({required this.onPressed, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      elevation: 6.0,
-      onPressed: onPressed,
-      child: child,
-      shape: CircleBorder(),
-      constraints: BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0,
-      ),
-      fillColor: Color(0xFF4C4F5E),
-    );
-  }
-}

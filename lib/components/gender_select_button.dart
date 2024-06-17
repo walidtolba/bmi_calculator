@@ -1,7 +1,6 @@
+import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:bmi_calculator/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:bmi_calculator/reusable_card.dart';
-
 
 class GenderSelectButton extends StatelessWidget {
   final IconData icon;
